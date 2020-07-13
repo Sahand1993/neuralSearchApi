@@ -9,11 +9,25 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- stage: CreateTrigramDataSet
+  displayName: Create Trigram Data Set
+  jobs:
+  - job: CloneRepo
+    displayName: Clone dataPreprocessor repo
+    steps:
+    - script: git clone https://github.com/Sahand1993/DataPreprocessor
+  - job: RunPreprocessor
+    displayName: Run Preprocessor
+    dependsOn: CloneRepo
+    steps:
+    - script: cd DataPreprocessor && mvn spring-boot:run
+
+- stage: LaunchApp
+  displayName: Launch App
+  dependsOn: CreateTrigramDataSet
+  jobs:
+  - deployment: LaunchApp
+  
+    # TODO

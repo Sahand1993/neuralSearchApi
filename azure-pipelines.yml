@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'adoptopenjdk/maven-openjdk8'
 
 stages:
 
@@ -29,5 +29,9 @@ stages:
   dependsOn: CreateTrigramDataSet
   jobs:
   - deployment: LaunchApp
-  
-    # TODO
+    environment: Deployer.default
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: flask run

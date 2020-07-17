@@ -16,7 +16,6 @@ stages:
   
   jobs:
   - deployment: LaunchApp
-    dependsOn: Preprocess
     environment: Deployer.default
     strategy:
       runOnce:

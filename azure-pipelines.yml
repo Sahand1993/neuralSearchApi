@@ -25,9 +25,10 @@ stages:
     steps:
     - script: cd DataPreprocessor && mvn spring-boot:run
   - job: Something
+    dependsOn: RunPreprocessor
     steps:
     - script: echo hi
-    
+
 - stage: LaunchApp
   displayName: Launch App
   dependsOn: CreateTrigramDataSet

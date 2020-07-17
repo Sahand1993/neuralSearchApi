@@ -17,7 +17,7 @@ stages:
   - job: CloneRepo
     displayName: Clone dataPreprocessor repo
     steps:
-    - script: maven -v
+    - script: mvn -v
     - script: git clone https://github.com/Sahand1993/DataPreprocessor
   - job: RunPreprocessor
     displayName: Run Preprocessor

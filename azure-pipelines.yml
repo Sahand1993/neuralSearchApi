@@ -13,7 +13,6 @@ stages:
 
 - stage: LaunchApp
   displayName: Launch App
-  dependsOn: CreateTrigramDataSet
   jobs:
   - job: Preprocess
     displayName: Preprocess Confluence
@@ -23,7 +22,7 @@ stages:
     - script: git branch
     - script: mvn spring-boot:run
   - deployment: LaunchApp
-    dependsOn: #TODO
+    dependsOn: Preprocess
     environment: Deployer.default
     strategy:
       runOnce:

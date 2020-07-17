@@ -21,6 +21,7 @@ stages:
     - script: git clone https://github.com/Sahand1993/DataPreprocessor
     - script: cd DataPreprocessor && git checkout azure
     - script: mkdir datasets && touch datasets/empty.txt
+    - script: mkdir preprocessed_datasets
     - script: cd DataPreprocessor && mvn spring-boot:run
       env:
         confluence_username: $(confluence_username)

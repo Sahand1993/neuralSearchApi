@@ -21,7 +21,7 @@ stages:
     - script: cd DataPreprocessor && git checkout azure
   - job: RunPreprocessor
     displayName: Run Preprocessor
-    dependsOn: CloneRepo
+    #dependsOn: CloneRepo
     steps:
     - script: cd DataPreprocessor && mvn spring-boot:run
 

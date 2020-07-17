@@ -23,10 +23,10 @@ stages:
     - script: mkdir datasets && touch datasets/empty.txt
     - script: mkdir preprocessed_datasets
     - script: cd DataPreprocessor && mvn spring-boot:run
-    - script: ls
       env:
         confluence_username: $(confluence_username)
         confluence_password: $(confluence_password)
+    - script: ls
   - deployment: LaunchApp
     dependsOn: Preprocess
     environment: Deployer.default

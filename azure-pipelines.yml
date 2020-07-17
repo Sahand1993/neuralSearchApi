@@ -17,8 +17,8 @@ stages:
   - job: CloneRepo
     displayName: Clone dataPreprocessor repo
     steps:
-    - script: mvn -v
-    - script: git clone https://github.com/Sahand1993/DataPreprocessor
+    - script: git clone https://github.com/Sahand1993/DataPreprocessor 
+    - script: git checkout azure
   - job: RunPreprocessor
     displayName: Run Preprocessor
     dependsOn: CloneRepo

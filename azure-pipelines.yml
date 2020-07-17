@@ -11,22 +11,10 @@ pool:
 
 stages:
 
-- stage: LaunchApp
+- stage: Deploy
   displayName: Launch App
   
   jobs:
-  - job: Preprocess
-    displayName: Preprocess Confluence
-    steps:
-    - script: git clone https://github.com/Sahand1993/DataPreprocessor
-    - script: cd DataPreprocessor && git checkout azure
-    - script: mkdir datasets && touch datasets/empty.txt
-    - script: mkdir preprocessed_datasets
-    - script: cd DataPreprocessor && mvn spring-boot:run
-      env:
-        confluence_username: $(confluence_username)
-        confluence_password: $(confluence_password)
-    - script: ls
   - deployment: LaunchApp
     dependsOn: Preprocess
     environment: Deployer.default
@@ -34,6 +22,13 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: echo Hello
-          - script: ls
-          - script: flask run
+            - script: git clone https://github.com/Sahand1993/DataPreprocessor
+            - script: cd DataPreprocessor && git checkout azure
+            - script: mkdir datasets && touch datasets/empty.txt
+            - script: mkdir preprocessed_datasets
+            - script: cd DataPreprocessor && mvn spring-boot:run
+              env:
+                confluence_username: $(confluence_username)
+                confluence_password: $(confluence_password)
+            - script: ls
+            - script: flask run

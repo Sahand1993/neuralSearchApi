@@ -20,7 +20,7 @@ stages:
     - script: git clone https://github.com/Sahand1993/DataPreprocessor
     - script: cd DataPreprocessor && git checkout azure
     - script: git branch
-    - script: mvn spring-boot:run
+    - script: mvn -e spring-boot:run
   - deployment: LaunchApp
     dependsOn: Preprocess
     environment: Deployer.default

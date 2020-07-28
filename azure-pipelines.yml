@@ -1,42 +1,16 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'Ubuntu-16.04'
 
-stages:
+variables:
+  imageName: 'pipelines-neuralsearch-docker'
 
-- stage: LaunchApp
-  displayName: Launch App
-  
-  jobs:
-  - job: Preprocess
-    displayName: Preprocess Confluence
-    steps:
-    - script: sudo apt-get install python3-setuptools
-    - script: pip3 -V
-    - script: pip3 install --upgrade pip
-    - script: pip3 install wheel
-
-    - script: git clone https://github.com/Sahand1993/DataPreprocessor
-    - script: cd DataPreprocessor && git checkout azure
-    - script: mkdir raw_datasets && touch raw_datasets/empty.txt
-    - script: mkdir preprocessed_datasets
-    - script: cd DataPreprocessor && mvn spring-boot:run
-      env:
-        confluence_username: $(confluence_username)
-        confluence_password: $(confluence_password)
-        
-    - script: pip3 install -r requirements.txt & flask run
-      env:
-        FLASK_APP: app.py
-        PYTHONUNBUFFERED: 1
-        NEURALSEARCH_TRIGRAMS_PATH: preprocessed_datasets/trigrams.txt
-        CONFLUENCE_USER: $(confluence_username)
-        CONFLUENCE_PASS: $(confluence_password)
-        CONFLUENCE_INDICES_FILE: preprocessed_datasets/confluence/data.csv
+steps:
+- task: Docker@2
+  displayName: Build NeuralSearch Docker image
+  inputs:
+    repository: $(imageName)
+    command: build
+    Dockerfile: Dockerfile

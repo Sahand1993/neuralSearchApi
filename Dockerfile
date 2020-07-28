@@ -1,7 +1,8 @@
 FROM maven:3.6.3-jdk-11
 
-RUN sudo apt-get install python3.7
-RUN sudo apt-get install python3-setuptools
+RUN apt-get update
+RUN apt-get install python3.7
+RUN apt-get install python3-setuptools
 RUN pip3 install --upgrade pip
 RUN pip3 install wheel
 RUN git clone https://github.com/Sahand1993/DataPreprocessor

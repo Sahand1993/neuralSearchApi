@@ -22,8 +22,6 @@ stages:
     - script: pip3 -V
     - script: pip3 install --upgrade pip
     - script: pip3 install wheel
-    - script: pip3 install tensorflow==2
-    - script: pip3 freeze
 
     - script: git clone https://github.com/Sahand1993/DataPreprocessor
     - script: cd DataPreprocessor && git checkout azure
@@ -34,7 +32,7 @@ stages:
         confluence_username: $(confluence_username)
         confluence_password: $(confluence_password)
         
-    - script: flask run
+    - script: pip3 install -r requirements.txt & flask run
       env:
         FLASK_APP: app.py
         PYTHONUNBUFFERED: 1

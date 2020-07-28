@@ -2,15 +2,16 @@ trigger:
 - master
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+ vmImage: 'Ubuntu-16.04'
 
 variables:
   imageName: 'pipelines-neuralsearch-docker'
 
 steps:
 - task: Docker@2
-  displayName: Build NeuralSearch Docker image
+  displayName: Build NeuralSearch Docker Image
   inputs:
     repository: $(imageName)
     command: build
     Dockerfile: Dockerfile
+    arguments: '--build-arg confluence_username=szarrinkoub --build-arg confluence_password=$(confluence_password)'

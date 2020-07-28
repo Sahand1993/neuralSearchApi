@@ -19,6 +19,7 @@ ENV confluence_password $confluence_password
 
 RUN cd DataPreprocessor && git checkout azure && mvn spring-boot:run && cd -
 
+RUN ls
 RUN pip3 install -r requirements.txt
 
 ENV FLASK_APP app.py

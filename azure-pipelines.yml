@@ -14,4 +14,4 @@ steps:
     repository: $(imageName)
     command: buildAndPush
     Dockerfile: Dockerfile
-    arguments: '--build-arg confluence_username=szarrinkoub --build-arg confluence_password=$(confluence_password)'
+    arguments: '--build-arg confluence_username=$(confluence_username) --build-arg confluence_password=$(confluence_password)'

@@ -23,8 +23,8 @@ TRIGRAMS_PATH = os.environ["NEURALSEARCH_TRIGRAMS_PATH"]
 
 
 CONFLUENCE_BASE_URL = "https://confluence.braincourt.net/rest/api/search"
-CONFLUENCE_USER = os.environ["CONFLUENCE_USER"]
-CONFLUENCE_PASS = os.environ["CONFLUENCE_PASS"]
+CONFLUENCE_USER = os.environ["confluence_username"]
+CONFLUENCE_PASS = os.environ["confluence_password"]
 
 #docs = {id: {"name": str, "content": List[str]}, id: {...}}
 trigramN = 3

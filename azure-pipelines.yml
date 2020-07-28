@@ -12,6 +12,6 @@ steps:
   displayName: Build NeuralSearch Docker Image
   inputs:
     repository: $(imageName)
-    command: build
+    command: buildAndPush
     Dockerfile: Dockerfile
     arguments: '--build-arg confluence_username=szarrinkoub --build-arg confluence_password=$(confluence_password)'

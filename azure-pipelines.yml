@@ -12,14 +12,20 @@ steps:
 - task: Docker@2
   displayName: Build NeuralSearch Docker Image
   inputs:
+    containerRegistry: $(dockerRegistry)
     repository: $(imageName)
+    tags: |
+      1.0
     command: build
     Dockerfile: Dockerfile
     arguments: '--build-arg confluence_username=$(confluence_username) --build-arg confluence_password=$(confluence_password)'
+    
 - task: Docker@2
   displayName: Push NeuralSearch Docker Image
   inputs:
-    repository: $(imageName)
-    command: push
     containerRegistry: $(dockerRegistry)
+    repository: $(imageName)
+    tags: |
+      1.0
+    command: push
     

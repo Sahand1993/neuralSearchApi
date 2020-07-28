@@ -26,6 +26,9 @@ stages:
       env:
         confluence_username: $(confluence_username)
         confluence_password: $(confluence_password)
+    - script: pip -V
+    - script: pip3 -V
+    - script: pip install -r requirements.txt
     - script: flask run
       env:
         FLASK_APP: app.py

@@ -26,4 +26,11 @@ stages:
       env:
         confluence_username: $(confluence_username)
         confluence_password: $(confluence_password)
-    - script: ls
+    - script: flask run
+      env:
+        FLASK_APP: app.py
+        PYTHONUNBUFFERED: 1
+        NEURALSEARCH_TRIGRAMS_PATH: preprocessed_datasets/trigrams.txt
+        CONFLUENCE_USER: $(confluence_username)
+        CONFLUENCE_PASS: $(confluence_password)
+        CONFLUENCE_INDICES_FILE: preprocessed_datasets/confluence/data.csv

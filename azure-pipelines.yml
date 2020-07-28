@@ -14,7 +14,6 @@ steps:
     repository: $(imageName)
     command: build
     Dockerfile: Dockerfile
-    arguments: |
-      confluence_username: $(confluence_username)
-      confluence_password: $(confluence_password)
+    arguments: confluence_username=$(confluence_username),confluence_password=$(confluence_password)
+
   

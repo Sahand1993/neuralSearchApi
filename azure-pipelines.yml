@@ -26,6 +26,7 @@ stages:
       env:
         confluence_username: $(confluence_username)
         confluence_password: $(confluence_password)
+    - script: sudo apt-get install python3-setuptools
     - script: pip3 -V
     - script: pip3 install -r requirements.txt
     - script: flask run

@@ -6,6 +6,7 @@ pool:
 
 variables:
   imageName: 'pipelines-neuralsearch-docker'
+  dockerRegistry: 'BraincourtDockerRegistry'
 
 steps:
 - task: Docker@2
@@ -14,11 +15,11 @@ steps:
     repository: $(imageName)
     command: build
     Dockerfile: Dockerfile
-    arguments: '--build-arg confluence_username=$(confluence_username) --build-arg confluence_password=$(confluence_password)'
+    arguments: '--build-arg confluence_username=$(confluence_username) --build-arg confluence_password=$(confluence_password) -t $(dockerRegistry)/$(imageName)'
 - task: Docker@2
   displayName: Push NeuralSearch Docker Image
   inputs:
     repository: $(imageName)
     command: push
-    containerRegistry: BraincourtDockerRegistry
+    containerRegistry: $(dockerRegistry)
     

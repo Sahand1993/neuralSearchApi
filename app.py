@@ -12,6 +12,7 @@ from requests.auth import HTTPBasicAuth
 
 from datasetiterators.fileiterators import ConfluenceFileIterator
 from dssm.model_dense_ngram import *
+from helpers.helpers import cosine_similarity
 
 app = Flask(__name__)
 CORS(app)
@@ -147,17 +148,22 @@ def default_confluence_search(query: str) -> List[Dict]:
 
 
 index_dataset()
+print("indexed dataset")
 load_trigram_mappings()
+print("loaded trigram mappings")
 
 
 # We call the API like: localhost:5000/neuralSearch/
 @app.route("/neuralSearch")
 def get_neural_search():
     query = request.args.get("query")
-    return json.dumps({
-        "results": neural_search(query),
-        "query": query,
-    }, indent=4)
+    if (query == None):
+        return ""
+    else:
+        return json.dumps({
+            "results": neural_search(query),
+            "query": query,
+        }, indent=4)
 
 
 @app.route("/defaultConfluence")
@@ -167,3 +173,8 @@ def dummy_results():
         "results": default_confluence_search(query),
         "query": query,
     }, indent=4)
+
+
+@app.route("/")
+def test():
+    return "Hello World"

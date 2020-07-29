@@ -1,7 +1,5 @@
 import tensorflow as tf
-from helpers.helpers import cosine_similarity
 from dssm.config import NO_OF_TRIGRAMS
-
 
 NO_OF_INDICES = NO_OF_TRIGRAMS
 

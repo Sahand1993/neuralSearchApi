@@ -20,11 +20,11 @@ ENV confluence_password $confluence_password
 RUN cd DataPreprocessor && git checkout azure && mvn spring-boot:run && cd -
 
 COPY . .
-RUN ls
 RUN pip3 install -r requirements.txt
 ENV FLASK_APP app.py
 ENV PYTHONUNBUFFERED 1
 ENV NEURALSEARCH_TRIGRAMS_PATH preprocessed_datasets/trigrams.txt
 ENV CONFLUENCE_INDICES_FILE preprocessed_datasets/confluence/data.csv
+ENV CONFLUENCE_TEXT_FILE preprocessed_datasets/confluence/mid.json
 
 ENTRYPOINT ["flask", "run"]

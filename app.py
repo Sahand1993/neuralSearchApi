@@ -1,5 +1,6 @@
 import json
 import random
+from pymongo import MongoClient
 from flask import Flask, request
 import requests
 from flask_cors import CORS
@@ -17,6 +18,10 @@ from helpers.helpers import cosine_similarity
 app = Flask(__name__)
 CORS(app)
 
+mongoclient = MongoClient()
+mongodb = mongoclient.neuralsearchdataset # neuralsearchdataset is the name of the mongodb database
+mongodataset = mongodb.queries # queries is the name of the collection in mongodb, where queries and documents are stored
+
 NEURAL_SEARCH_CUTOFF = 20
 CONFLUENCE_INDICES_PATH = os.environ["CONFLUENCE_INDICES_FILE"]
 CONFLUENCE_TEXT_PATH = os.environ["CONFLUENCE_TEXT_FILE"]
@@ -27,7 +32,6 @@ CONFLUENCE_BASE_URL = "https://confluence.braincourt.net/rest/api/search"
 CONFLUENCE_USER = os.environ["confluence_username"]
 CONFLUENCE_PASS = os.environ["confluence_password"]
 
-#docs = {id: {"name": str, "content": List[str]}, id: {...}}
 trigramN = 3
 docs: Dict[str, Dict] = {}
 trigramIndices: Dict[str, int] = {}
@@ -157,7 +161,7 @@ print("loaded trigram mappings")
 @app.route("/neuralSearch")
 def get_neural_search():
     query = request.args.get("query")
-    if (query == None):
+    if query == None:
         return ""
     else:
         return json.dumps({
@@ -169,6 +173,8 @@ def get_neural_search():
 @app.route("/defaultConfluence")
 def dummy_results():
     query = request.args.get("query")
+    if query == None:
+        return ""
     return json.dumps({
         "results": default_confluence_search(query),
         "query": query,
@@ -178,3 +184,15 @@ def dummy_results():
 @app.route("/")
 def test():
     return "Hello World"
+
+
+@app.route("/savedata")
+def save_datapoint():
+    """Saves a (query, document) pair for future training of the search model"""
+    query = request.args.get("query")
+    document_id= request.args.get("documentId")
+    document_title = request.args.get("documentTitle")
+    example = {"query": query, "document_id": document_id, "document_title": document_title}
+    mongodataset.insert_one(example)
+    print("inserted {} into database".format(example))
+    return "Success"
